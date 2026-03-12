@@ -1,13 +1,21 @@
 # TOC Template for Wiki Generation
 # Replace placeholders with actual values
+#
+# Required fields: name, description, ref_commit_hash
+# Optional fields: repo_base_url, language, updated_at
+#
+# Language support:
+#   - en-US (default): English output
+#   - zh-CN: Chinese (Simplified) output
+#   - ja-JP: Japanese output
 
 project:
   name: "{PROJECT_NAME}"
   description: "{PROJECT_DESCRIPTION}"
-  api_docs_source: "{API_DOCS_DIR}"  # Optional, e.g., "docs/api"
   repo_base_url: "{REPO_BASE_URL}"  # e.g., https://github.com/owner/repo/blob
   ref_commit_hash: "{COMMIT_HASH}"  # From: git rev-parse HEAD
-  updated_at: "{DATE}"  # YYYY-MM-DD
+  language: "en-US"                  # Output language: en-US, zh-CN, ja-JP
+  updated_at: "{DATE}"               # YYYY-MM-DD
 
 pages:
   # ============================================================
