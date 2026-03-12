@@ -1,140 +1,6 @@
-# Wiki Document Generator / Wiki 文档生成器
+# Wiki 文档生成器 / Wiki Document Generator
 
-[English](#english) | [中文](#中文)
-
----
-
-<a name="english"></a>
-
-## English
-
-### Overview
-
-**Wiki Document Generator** is a skill for AI assistants (like Claude Code, Codex, Cursor) that generates comprehensive wiki-style documentation for any codebase. It uses evidence-based citations with actual source file references and supports Mermaid diagram validation.
-
-### Key Features
-
-- **Evidence-Based Citations**: Every claim is backed by actual source file references with line numbers
-- **Mermaid Diagram Support**: Generate and validate flowcharts, sequence diagrams, class diagrams, and more
-- **Incremental Updates**: Only regenerate changed documentation sections
-- **Multi-Language Support**: Generate documentation in different languages (default: en-US)
-- **Zero External Dependencies**: Uses only native AI assistant tools (Read, Glob, Bash, Write)
-
-### Workflow Phases
-
-| Phase | ID | Description |
-|-------|-----|-------------|
-| 1 | `repo-scan` | Scan repository to gather context for TOC design |
-| 2 | `toc-design` | Design the Table of Contents structure |
-| 3 | `doc-write` | Generate documentation pages |
-| 4 | `validate-docs` | Validate diagrams and document structure |
-| 5 | `doc-summary` | Generate SUMMARY.md report |
-| 6 | `incremental-sync` | Detect changes and update incrementally |
-
-### Execution Modes
-
-| Mode | Phases | Use Case |
-|------|--------|----------|
-| **Automatic** | 1 → 2 → 3 → 4 → 5 | Full pipeline for new documentation |
-| **Structure-only** | 1 → 2 | Generate TOC only, stop before docs |
-| **TOC-based** | 3 → 4 → 5 | Generate docs from existing `toc.yaml` |
-| **Incremental** | 6 → 3 → 4 → 5 | Update docs after code changes |
-
-### Project Structure
-
-```
-wiki/
-├── SKILL.md                      # Main skill definition file
-├── README.md                     # This file
-├── references/                   # Reference documentation
-│   ├── toc_schema.md             # TOC YAML schema specification
-│   ├── evidence_citation_policy.md  # Citation rules and formats
-│   ├── page_template.md          # Page structure and markers
-│   ├── mermaid_policy.md         # Mermaid diagram rules
-│   ├── doc_update_policy.md      # Documentation update policies
-│   ├── validation_policy.md      # Validation rules
-│   └── workflow/                 # Phase-specific instructions
-│       ├── repo-scan.md          # Phase 1: Repository scanning
-│       ├── toc-design.md         # Phase 2: TOC design
-│       ├── doc-write.md          # Phase 3: Document generation
-│       ├── validate-docs.md      # Phase 4: Validation
-│       ├── doc-summary.md        # Phase 5: Summary generation
-│       └── incremental-sync.md   # Phase 6: Incremental updates
-└── templates/
-    └── toc.yaml.template         # TOC YAML template
-```
-
-### Output Structure
-
-The generated documentation follows this structure:
-
-```
-docs/wiki/
-├── toc.yaml                      # Table of Contents definition
-├── 01_overview.md                # Documentation pages
-├── 02_architecture.md
-├── 03_api.md
-├── ...
-├── SUMMARY.md                    # Documentation summary report
-└── _context/
-    └── context_pack.json         # Project context for incremental updates
-```
-
-### TOC YAML Schema
-
-The `toc.yaml` file defines the documentation structure:
-
-```yaml
-project:
-  name: "ProjectName"
-  description: "Brief project description"
-  repo_base_url: "https://github.com/owner/repo/blob"
-  ref_commit_hash: "abc123..."
-  updated_at: "2024-01-15"
-
-pages:
-  - id: project_01_overview
-    title: "Overview"
-    filename: "01_overview.md"
-    source_files:
-      - "README.md"
-      - "package.json"
-    sections:
-      - id: project_01_overview_introduction
-        title: "Introduction"
-        autogen: true
-        diagrams_needed: false
-```
-
-### Citation Format
-
-All claims are backed by source citations:
-
-```markdown
-The Button component accepts a `variant` prop ([Button.tsx:15-20](url)).
-```
-
-### Page Markers
-
-Generated pages use markers for safe incremental updates:
-
-```markdown
-<!-- PAGE_ID: project_01_overview -->
-<!-- BEGIN:AUTOGEN section_id -->
-Auto-generated content here...
-<!-- END:AUTOGEN section_id -->
-```
-
-### Supported Diagram Types
-
-| Type | Use Case |
-|------|----------|
-| `flowchart` | Process flows, decision trees, data flow |
-| `sequence` | Interaction sequences, API calls |
-| `class` | Class relationships, inheritance |
-| `state` | State machines, status transitions |
-| `er` | Entity relationships, database schema |
-| `gantt` | Project timelines |
+[中文](#中文) | [English](#english)
 
 ---
 
@@ -283,6 +149,140 @@ Button 组件接受一个 `variant` 属性用于控制外观（[Button.tsx:15-20
 ```
 为这个项目生成文档
 ```
+
+---
+
+<a name="english"></a>
+
+## English
+
+### Overview
+
+**Wiki Document Generator** is a skill for AI assistants (like Claude Code, Codex, Cursor) that generates comprehensive wiki-style documentation for any codebase. It uses evidence-based citations with actual source file references and supports Mermaid diagram validation.
+
+### Key Features
+
+- **Evidence-Based Citations**: Every claim is backed by actual source file references with line numbers
+- **Mermaid Diagram Support**: Generate and validate flowcharts, sequence diagrams, class diagrams, and more
+- **Incremental Updates**: Only regenerate changed documentation sections
+- **Multi-Language Support**: Generate documentation in different languages (default: en-US)
+- **Zero External Dependencies**: Uses only native AI assistant tools (Read, Glob, Bash, Write)
+
+### Workflow Phases
+
+| Phase | ID | Description |
+|-------|-----|-------------|
+| 1 | `repo-scan` | Scan repository to gather context for TOC design |
+| 2 | `toc-design` | Design the Table of Contents structure |
+| 3 | `doc-write` | Generate documentation pages |
+| 4 | `validate-docs` | Validate diagrams and document structure |
+| 5 | `doc-summary` | Generate SUMMARY.md report |
+| 6 | `incremental-sync` | Detect changes and update incrementally |
+
+### Execution Modes
+
+| Mode | Phases | Use Case |
+|------|--------|----------|
+| **Automatic** | 1 → 2 → 3 → 4 → 5 | Full pipeline for new documentation |
+| **Structure-only** | 1 → 2 | Generate TOC only, stop before docs |
+| **TOC-based** | 3 → 4 → 5 | Generate docs from existing `toc.yaml` |
+| **Incremental** | 6 → 3 → 4 → 5 | Update docs after code changes |
+
+### Project Structure
+
+```
+wiki/
+├── SKILL.md                      # Main skill definition file
+├── README.md                     # This file
+├── references/                   # Reference documentation
+│   ├── toc_schema.md             # TOC YAML schema specification
+│   ├── evidence_citation_policy.md  # Citation rules and formats
+│   ├── page_template.md          # Page structure and markers
+│   ├── mermaid_policy.md         # Mermaid diagram rules
+│   ├── doc_update_policy.md      # Documentation update policies
+│   ├── validation_policy.md      # Validation rules
+│   └── workflow/                 # Phase-specific instructions
+│       ├── repo-scan.md          # Phase 1: Repository scanning
+│       ├── toc-design.md         # Phase 2: TOC design
+│       ├── doc-write.md          # Phase 3: Document generation
+│       ├── validate-docs.md      # Phase 4: Validation
+│       ├── doc-summary.md        # Phase 5: Summary generation
+│       └── incremental-sync.md   # Phase 6: Incremental updates
+└── templates/
+    └── toc.yaml.template         # TOC YAML template
+```
+
+### Output Structure
+
+The generated documentation follows this structure:
+
+```
+docs/wiki/
+├── toc.yaml                      # Table of Contents definition
+├── 01_overview.md                # Documentation pages
+├── 02_architecture.md
+├── 03_api.md
+├── ...
+├── SUMMARY.md                    # Documentation summary report
+└── _context/
+    └── context_pack.json         # Project context for incremental updates
+```
+
+### TOC YAML Schema
+
+The `toc.yaml` file defines the documentation structure:
+
+```yaml
+project:
+  name: "ProjectName"
+  description: "Brief project description"
+  repo_base_url: "https://github.com/owner/repo/blob"
+  ref_commit_hash: "abc123..."
+  updated_at: "2024-01-15"
+
+pages:
+  - id: project_01_overview
+    title: "Overview"
+    filename: "01_overview.md"
+    source_files:
+      - "README.md"
+      - "package.json"
+    sections:
+      - id: project_01_overview_introduction
+        title: "Introduction"
+        autogen: true
+        diagrams_needed: false
+```
+
+### Citation Format
+
+All claims are backed by source citations:
+
+```markdown
+The Button component accepts a `variant` prop ([Button.tsx:15-20](url)).
+```
+
+### Page Markers
+
+Generated pages use markers for safe incremental updates:
+
+```markdown
+<!-- PAGE_ID: project_01_overview -->
+<!-- BEGIN:AUTOGEN section_id -->
+Auto-generated content here...
+<!-- END:AUTOGEN section_id -->
+```
+
+### Supported Diagram Types
+
+| Type | Use Case |
+|------|----------|
+| `flowchart` | Process flows, decision trees, data flow |
+| `sequence` | Interaction sequences, API calls |
+| `class` | Class relationships, inheritance |
+| `state` | State machines, status transitions |
+| `er` | Entity relationships, database schema |
+| `gantt` | Project timelines |
 
 ---
 
