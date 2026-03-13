@@ -286,6 +286,14 @@ Auto-generated content here...
 
 ---
 
+## Acknowledgments / 致谢
+
+This project is based on the prototype project [deepwiki-skill](https://github.com/natsu1211/deepwiki-skill).
+
+本项目基于原型项目 [deepwiki-skill](https://github.com/natsu1211/deepwiki-skill) 开发。
+
+---
+
 ## License / 许可证
 
 MIT License
