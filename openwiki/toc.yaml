@@ -1,0 +1,23 @@
+﻿version: 1
+language: zh-CN
+site:
+  title: OpenWiki 文档
+pages:
+  - id: overview
+    title: 项目总览
+    file: wiki/01-overview.md
+  - id: architecture
+    title: 架构设计
+    file: wiki/02-architecture.md
+  - id: backend_api
+    title: 后端与 API
+    file: wiki/03-backend-api.md
+  - id: frontend
+    title: 前端结构
+    file: wiki/04-frontend.md
+  - id: deployment
+    title: 部署与运行
+    file: wiki/05-deployment.md
+  - id: configuration
+    title: 配置说明
+    file: wiki/06-configuration.md
