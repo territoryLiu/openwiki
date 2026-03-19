@@ -1,0 +1,166 @@
+{
+    "generated_at":  "2026-03-19 16:37:45",
+    "root_dir":  "D:/vscode/skills/openwiki",
+    "engine":  {
+                   "name":  "openwiki-repo-scan",
+                   "version":  "2.0"
+               },
+    "compatibility":  {
+                          "targets":  [
+                                          "Claude Code",
+                                          "Codex"
+                                      ],
+                          "requirements":  [
+                                               "PowerShell",
+                                               "rg"
+                                           ]
+                      },
+    "project":  {
+                    "name":  "openwiki",
+                    "file_count":  23,
+                    "top_modules":  [
+                                        {
+                                            "name":  "openwiki",
+                                            "file_count":  21
+                                        },
+                                        {
+                                            "name":  "(root)",
+                                            "file_count":  1
+                                        },
+                                        {
+                                            "name":  ".github",
+                                            "file_count":  1
+                                        }
+                                    ]
+                },
+    "stack":  {
+                  "languages":  [
+                                    {
+                                        "language":  "PowerShell",
+                                        "file_count":  7
+                                    }
+                                ],
+                  "frameworks":  [
+
+                                 ]
+              },
+    "entry_points":  {
+                         "backend":  [
+
+                                     ],
+                         "frontend":  [
+
+                                      ],
+                         "workers":  [
+
+                                     ]
+                     },
+    "dependencies":  {
+                         "node":  [
+
+                                  ],
+                         "python":  [
+
+                                    ],
+                         "dotnet":  [
+
+                                    ],
+                         "go":  [
+
+                                ],
+                         "java":  [
+
+                                  ]
+                     },
+    "tooling":  {
+                    "package_managers":  [
+
+                                         ],
+                    "ci_cd":  {
+                                  "providers":  [
+                                                    "GitHub Actions"
+                                                ],
+                                  "config_files":  [
+                                                       ".github/workflows/openwiki-cross-platform.yml"
+                                                   ]
+                              },
+                    "tests":  {
+                                  "test_files_count":  0,
+                                  "framework_hints":  [
+
+                                                      ],
+                                  "coverage_configs":  [
+
+                                                       ],
+                                  "key_test_files":  [
+
+                                                     ]
+                              },
+                    "run_profiles":  {
+                                         "commands_count":  0,
+                                         "suggested_commands":  [
+
+                                                                ]
+                                     }
+                },
+    "api_endpoints":  [
+
+                      ],
+    "configuration":  {
+                          "files":  [
+
+                                    ],
+                          "keys":  [
+
+                                   ]
+                      },
+    "quality":  {
+                    "parse_confidence":  40,
+                    "confidence_level":  "low",
+                    "coverage":  {
+                                     "files_scanned":  23,
+                                     "languages_detected":  1,
+                                     "frameworks_detected":  0,
+                                     "api_endpoints_detected":  0,
+                                     "config_keys_detected":  0,
+                                     "dependencies_detected":  0,
+                                     "ci_providers_detected":  1,
+                                     "test_files_detected":  0,
+                                     "run_commands_detected":  0
+                                 },
+                    "gaps":  [
+                                 "未识别到 API 路由线索（可能是静态站点或路由写法未覆盖）。",
+                                 "未识别到配置键（建议检查 .env / yaml / json）。",
+                                 "未识别到依赖清单（可能缺少 lockfile/manifest）。",
+                                 "未识别到测试文件或测试框架线索。",
+                                 "未识别到启动命令线索。"
+                             ]
+                },
+    "evidence":  {
+                     "key_files":  [
+                                       "README.md",
+                                       "openwiki/wiki/06-qa-troubleshooting.md",
+                                       "openwiki/wiki/05-config-devops.md",
+                                       "openwiki/wiki/04-api-contract.md",
+                                       "openwiki/wiki/03-dataflow-standards.md",
+                                       "openwiki/wiki/02-architecture.md",
+                                       "openwiki/wiki/01-overview.md",
+                                       "openwiki/toc.yaml",
+                                       "openwiki/templates/wiki-page.template.md",
+                                       "openwiki/templates/SUMMARY.template.md",
+                                       "openwiki/templates/README.template.md",
+                                       "openwiki/templates/quickstart.template.md",
+                                       "openwiki/SUMMARY.md",
+                                       "openwiki/SKILL.md",
+                                       "openwiki/scripts/validate-lite.ps1",
+                                       "openwiki/scripts/smoke-test.ps1",
+                                       "openwiki/scripts/repo-scan.ps1",
+                                       "openwiki/scripts/openwiki-run.ps1",
+                                       "openwiki/scripts/openwiki-doctor.ps1",
+                                       "openwiki/scripts/migrate-autogen-markers.ps1",
+                                       "openwiki/scripts/generate-from-facts.ps1",
+                                       "openwiki/quickstart.md",
+                                       ".github/workflows/openwiki-cross-platform.yml"
+                                   ]
+                 }
+}

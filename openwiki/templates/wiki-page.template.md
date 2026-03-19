@@ -1,4 +1,4 @@
-﻿<!-- PAGE_ID: {{page_id}} -->
+<!-- PAGE_ID: {{page_id}} -->
 
 <details>
 <summary>参考源码</summary>
@@ -16,6 +16,7 @@
 
 - 说明本页覆盖的模块边界和读者收益。
 - 给出读者进入该模块的最短阅读路径。
+- 优先基于 `docs/openwiki/facts.json` 的已确认事实编写。
 
 参考：`{{source_file_1}}`
 <!-- END:AUTOGEN {{page_id}}_overview -->

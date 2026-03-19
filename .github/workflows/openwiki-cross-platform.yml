@@ -1,0 +1,55 @@
+name: openwiki-cross-platform
+
+on:
+  push:
+    paths:
+      - "openwiki/**"
+      - "README.md"
+      - ".github/workflows/openwiki-cross-platform.yml"
+  pull_request:
+    paths:
+      - "openwiki/**"
+      - "README.md"
+      - ".github/workflows/openwiki-cross-platform.yml"
+
+jobs:
+  smoke:
+    name: smoke (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install ripgrep (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ripgrep
+
+      - name: Install ripgrep (Windows)
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: choco install ripgrep -y
+
+      - name: Doctor
+        shell: pwsh
+        run: |
+          pwsh -NoProfile -File openwiki/scripts/openwiki-doctor.ps1 -RootDir . -DocDir openwiki
+
+      - name: Pipeline Dry Run
+        shell: pwsh
+        run: |
+          pwsh -NoProfile -File openwiki/scripts/openwiki-run.ps1 -RootDir . -DocDir openwiki -ReadmePath README.md -DoctorFirst -MigrateMarkers -DryRun -FailOnError
+
+      - name: Smoke Test
+        shell: pwsh
+        run: |
+          pwsh -NoProfile -File openwiki/scripts/smoke-test.ps1 -RootDir . -DocDir openwiki -ReadmePath README.md

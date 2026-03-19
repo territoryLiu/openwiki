@@ -9,7 +9,8 @@ description: 轻量 Wiki 文档生成 skill。使用 rg 扫描代码事实，快
 
 1. 根目录 `README.md`
 2. `docs/openwiki/quickstart.md`
-3. `docs/openwiki/wiki/*.md`（按 `toc.yaml`）
+3. `docs/openwiki/facts.json`
+4. `docs/openwiki/wiki/*.md`（按 `toc.yaml`）
 
 ## 执行规则
 
@@ -17,20 +18,28 @@ description: 轻量 Wiki 文档生成 skill。使用 rg 扫描代码事实，快
 - 只写已确认事实，缺失内容标记“待补充”
 - 先保证可用，再优化细节
 
+## 兼容性
+
+- Codex：支持（`pwsh` + `rg` 环境）
+- Claude Code：支持（`pwsh` + `rg` 环境）
+- 推荐统一使用 `openwiki/scripts/openwiki-run.ps1` 执行完整流水线
+- 可选 CI：`.github/workflows/openwiki-cross-platform.yml`（Ubuntu + Windows）
+
 ## 输出结构
 
 ```text
 docs/openwiki/
 ├── toc.yaml
+├── facts.json
 ├── quickstart.md
 ├── SUMMARY.md
 └── wiki/
     ├── 01-overview.md
     ├── 02-architecture.md
-    ├── 03-backend-api.md
-    ├── 04-frontend.md
-    ├── 05-deployment.md
-    └── 06-configuration.md
+    ├── 03-dataflow-standards.md
+    ├── 04-api-contract.md
+    ├── 05-config-devops.md
+    └── 06-qa-troubleshooting.md
 ```
 
 ## 借鉴 openwiki-old 的轻量增强
@@ -67,51 +76,83 @@ docs/openwiki/
 - README 中 quickstart/wiki 路径可访问
 - `toc.yaml` 页面路径与实际文件一致
 
-## 固定流程（3+1）
+## 固定流程（4+1）
+
+### Step 0: doctor（建议）
+
+```bash
+pwsh -NoProfile -File openwiki/scripts/openwiki-doctor.ps1 -RootDir . -DocDir docs/openwiki
+```
+
+### 推荐一键执行
+
+```bash
+pwsh -NoProfile -File openwiki/scripts/openwiki-run.ps1 -RootDir . -DocDir docs/openwiki -ReadmePath README.md -DoctorFirst -MigrateMarkers
+```
 
 ### Step 1: repo-scan
 
 按需执行：
 
 ```bash
-rg --files
-rg -n "MiniApi|Http(Get|Post|Put|Delete)|MapGet|MapPost" src
-rg -n "AddDbContext|UseSqlite|UseNpgsql|ConnectionString|DB_TYPE|CONNECTION_STRING" src compose.yaml
-rg -n "WIKI_|CHAT_|ENDPOINT|JWT_" compose.yaml src/OpenDeepWiki/appsettings*.json
-rg -n "next|app/|components/|route.ts|page.tsx" web
+pwsh -NoProfile -File openwiki/scripts/repo-scan.ps1 -RootDir . -OutputPath docs/openwiki/facts.json
 ```
 
-提取 4 类事实：
+`repo-scan.ps1` 至少提取 6 类事实：
 
 - 入口（后端/前端）
 - API 与模块边界
 - 配置项与环境变量
-- 启动与部署方式
+- 技术栈与框架识别
+- 多语言依赖清单
+- 模块目录分布
 
 ### Step 2: toc-design
 
 - 默认使用本目录的 `toc.yaml`
 - 仅在项目结构明显不匹配时调整页面清单
 
+### Step 2.5: marker-migrate（可选）
+
+若旧页面 AUTOGEN 命名不符合 `<page_id>_overview/implementation/interfaces`，先迁移：
+
+```bash
+pwsh -NoProfile -File openwiki/scripts/migrate-autogen-markers.ps1 -WikiDir docs/openwiki/wiki
+```
+
 ### Step 3: doc-write
 
-按模板写：
+先自动生成初稿，再人工补充：
 
-- 根 `README.md` -> `templates/README.template.md`
-- `docs/openwiki/quickstart.md` -> `templates/quickstart.template.md`
-- `docs/openwiki/wiki/*.md` -> `templates/wiki-page.template.md`
+```bash
+pwsh -NoProfile -File openwiki/scripts/generate-from-facts.ps1 -DocDir docs/openwiki -FactsPath docs/openwiki/facts.json -TocPath docs/openwiki/toc.yaml -ReadmePath README.md
+```
 
-### Step 4: validate-lite
+- 默认安全模式：不覆盖已有 README/quickstart，且仅更新标准 AUTOGEN 区块
+- 强制覆盖模式：追加 `-OverwriteExisting`
+
+### Step 4: manual-refine
+
+- 人工补充业务语义、架构权衡、风险边界
+- 不确定结论标记“待补充”
+
+### Step 5: validate-lite
 
 - 校验结构与链接，不做重型流水线
 - 发现问题后就地修正并覆盖写回
 - 执行命令：
 
 ```bash
-powershell -NoProfile -ExecutionPolicy Bypass -File openwiki/scripts/validate-lite.ps1 -DocDir docs/openwiki -ReadmePath README.md
+pwsh -NoProfile -File openwiki/scripts/validate-lite.ps1 -DocDir docs/openwiki -ReadmePath README.md
 ```
 
 - 输出：`docs/openwiki/SUMMARY.md`
+
+### Step 6: smoke-test（建议）
+
+```bash
+pwsh -NoProfile -File openwiki/scripts/smoke-test.ps1 -RootDir . -DocDir docs/openwiki -ReadmePath README.md
+```
 
 ## 轻量质量门槛
 

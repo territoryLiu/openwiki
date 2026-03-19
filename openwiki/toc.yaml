@@ -1,23 +1,23 @@
-﻿version: 1
+version: 1
 language: zh-CN
 site:
   title: OpenWiki 文档
 pages:
   - id: overview
-    title: 项目总览
+    title: 01-项目门面与总览
     file: wiki/01-overview.md
   - id: architecture
-    title: 架构设计
+    title: 02-系统架构与设计决策
     file: wiki/02-architecture.md
-  - id: backend_api
-    title: 后端与 API
-    file: wiki/03-backend-api.md
-  - id: frontend
-    title: 前端结构
-    file: wiki/04-frontend.md
-  - id: deployment
-    title: 部署与运行
-    file: wiki/05-deployment.md
-  - id: configuration
-    title: 配置说明
-    file: wiki/06-configuration.md
+  - id: dataflow_standards
+    title: 03-数据流与开发规范
+    file: wiki/03-dataflow-standards.md
+  - id: api_contract
+    title: 04-API 与接口契约
+    file: wiki/04-api-contract.md
+  - id: config_devops
+    title: 05-配置与 DevOps
+    file: wiki/05-config-devops.md
+  - id: qa_troubleshooting
+    title: 06-测试与故障排查
+    file: wiki/06-qa-troubleshooting.md

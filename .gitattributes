@@ -1,0 +1,31 @@
+# Default: normalize all text files in repo
+* text=auto
+
+# Force LF for docs/config/scripts to avoid cross-platform CRLF/LF add errors
+*.md text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+*.env text eol=lf
+*.txt text eol=lf
+*.ps1 text eol=lf
+*.psm1 text eol=lf
+*.psd1 text eol=lf
+*.sh text eol=lf
+*.py text eol=lf
+*.js text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.jsx text eol=lf
+*.cs text eol=lf
+*.go text eol=lf
+*.java text eol=lf
+
+# Common binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.zip binary
